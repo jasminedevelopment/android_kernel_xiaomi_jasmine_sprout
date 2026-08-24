@@ -41,6 +41,7 @@ KBUILD_CFLAGS	+= $(lseinstr)
 KBUILD_CFLAGS	+= -fno-pic
 KBUILD_CFLAGS	+= $(call cc-option, -mpc-relative-literal-loads)
 KBUILD_CFLAGS	+= -fno-asynchronous-unwind-tables
+KBUILD_CFLAGS	+= $(call cc-option, -mstrict-align)
 KBUILD_AFLAGS	+= $(lseinstr)
 
 KBUILD_CFLAGS	+= $(call cc-option,-mabi=lp64)
