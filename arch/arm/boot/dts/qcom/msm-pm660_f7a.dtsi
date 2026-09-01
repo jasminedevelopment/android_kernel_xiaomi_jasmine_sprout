@@ -66,9 +66,10 @@
 				qcom,pon-type = <3>;
 				qcom,pull-up = <1>;
 				qcom,support-reset = <1>;
-				qcom,s1-timer = <4480>;
-				qcom,s2-timer = <1000>;
+				qcom,s1-timer = <3072>;
+				qcom,s2-timer = <2000>;
 				qcom,s2-type = <1>;
+				qcom,use-bark;
 			};
 		};
 
@@ -279,6 +280,18 @@
 				qcom,fast-avg-setup = <0>;
 			};
 
+			chan@50 {
+				label = "backlight_therm";
+				reg = <0x50>;
+				qcom,decimation = <2>;
+				qcom,pre-div-channel-scaling = <0>;
+				qcom,calibration-type = "ratiometric";
+				qcom,scale-function = <2>;
+				qcom,hw-settle-time = <2>;
+				qcom,fast-avg-setup = <0>;
+				qcom,vadc-thermal-node;
+			};
+
 			chan@51 {
 				label = "quiet_therm";
 				reg = <0x51>;
@@ -345,9 +358,16 @@
 
 			qcom,wipower-max-uw = <5000000>;
 			dpdm-supply = <&qusb_phy0>;
+			qcom,usb-icl-ua = <2900000>;
+			qcom,otg-cl-ua = <1500000>;
+			qcom,dc-icl-ua = <2900000>;
+			qcom,fcc-max-ua = <2900000>;
+			qcom,fv-max-uv  = <4400000>;
+			qcom,sw-jeita-enable;
+
 
 			qcom,thermal-mitigation
-					= <2900000 2000000 1800000 1500000 1000000 500000 100000>;
+					= <2900000 2400000 2000000 1500000 800000 500000 100000>;
 
 			qcom,chgr@1000 {
 				reg = <0x1000 0x100>;
@@ -563,10 +583,17 @@
 			io-channel-names = "rradc_batt_id",
 					   "rradc_die_temp";
 			qcom,rradc-base = <0x4500>;
+			qcom,fg-cutoff-voltage = <3400>;
+			qcom,fg-chg-term-current = <200>;
+			qcom,fg-sys-term-current = <300>;
+			qcom,fg-recharge-voltage = <4350>;
 			qcom,fg-esr-timer-awake = <96 96>;
 			qcom,fg-esr-timer-asleep = <256 256>;
 			qcom,fg-esr-timer-charging = <0 96>;
 			qcom,cycle-counter-en;
+			qcom,fg-jeita-thresholds = <0 15 45 60>;
+			qcom,fg-jeita-hyst-temp = <0>;
+			qcom,battery-thermal-coefficients = [d2 50 ff];
 			status = "okay";
 
 			qcom,fg-batt-soc@4000 {
@@ -650,7 +677,7 @@
 			qcom,pmic-revid = <&pm660_revid>;
 			qcom,pmic-misc = <&pm660_misc>;
 			qcom,misc-clk-trim-error-reg = <0xf3>;
-			qcom,actuator-type = "lra";
+			qcom,actuator-type = "erm";
 			qcom,play-mode = "direct";
 			qcom,vmax-mv = <3200>;
 			qcom,ilim-ma = <800>;

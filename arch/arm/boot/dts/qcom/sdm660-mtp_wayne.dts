@@ -13,19 +13,21 @@
 
 /dts-v1/;
 
-#include "sdm660.dtsi"
-#include "sdm660-mtp.dtsi"
-#include "sdm660-smb1355-mtp.dtsi"
+#include "sdm660_wayne.dtsi"
+#include "sdm660-mtp_wayne.dtsi"
 //#include "sdm660-external-codec.dtsi"
 #include "sdm660-internal-codec.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. SDM 660 PM660 + PM660L MTP";
+	model = "Qualcomm Technologies, Inc. SDM 660 PM660 + PM660L MTP WAYNE";
 	compatible = "qcom,sdm660-mtp", "qcom,sdm660", "qcom,mtp";
-	qcom,board-id = <8 0>;
+	qcom,board-id = <0x50008 0>;
 	qcom,pmic-id = <0x0001001b 0x0101011a 0x0 0x0>,
 			<0x0001001b 0x0201011a 0x0 0x0>,
 			<0x0001001b 0x0102001a 0x0 0x0>;
+
+
+
 };
 
 &tavil_snd {
@@ -40,31 +42,31 @@
 };
 
 &pm660l_l3 {
-		regulator-always-on;
+        regulator-always-on;
 };
 &tlmm {
 	hall_int_active:hall_int_active {
 		mux {
-				  pins = "gpio76";
-				  function = "gpio";
+		          pins = "gpio76";
+		          function = "gpio";
 		};
 		config{
-				  pins = "gpio76";
-					  drive-strength = <6>;
-					  bias-pull-up;
-				};
-		};
+		          pins = "gpio76";
+	                  drive-strength = <6>;
+	                  bias-pull-up;
+	            };
+        };
 	hall_int_suspend: hall_int_suspend {
 		mux {
-				  pins = "gpio76";
-				  function = "gpio";
+		          pins = "gpio76";
+		          function = "gpio";
 		};
 		config{
-				  pins = "gpio76";
-				  drive-strength = <6>;
-				  bias-pull-up;
+		          pins = "gpio76";
+		          drive-strength = <6>;
+		          bias-pull-up;
 		};
-		};
+        };
 };
 
 &pm660_gpios {
@@ -76,7 +78,7 @@
 		qcom,src-sel = <2>; /* Special Function 1 */
 		qcom,invert = <0>; /* Invert */
 		qcom,master-en = <1>; /* Enable GPIO */
-			status = "ok";
+	        status = "ok";
 	};
 };
 
@@ -97,7 +99,7 @@
 		//spi-cpol; //CPOL bit set for SPI polarity
 		//spi-cpha; //CPHA bit set for SPI Phase
 
-		read-chunk-size  = <0x2000>;	/* 8192 bytes   */
+		read-chunk-size  = <0x2000>;    /* 8192 bytes   */
 		write-chunk-size = <0x20000>;   /* 131072 bytes */
 		dma_min_buffer_size = <0>;
 	};
@@ -106,15 +108,15 @@
 &soc {
 	hall_switch {
 
-		compatible = "hall-switch,och175";
-		pinctrl-names = "hall_active","hall_suspend";
-		pinctrl-0 = <&hall_int_active>;
-		pinctrl-1 = <&hall_int_suspend>;
-		//interrupt-parent = <&msm_gpio>;
-		//interrupts = <0 107 3>;
-		vdd-io-supply= <&pm660_l8>;
-		interrupt-names = "hall_irq";
-		hall,irq-gpio = <&tlmm 76 0x0>;
+	    compatible = "hall-switch,och175";
+	    pinctrl-names = "hall_active","hall_suspend";
+	    pinctrl-0 = <&hall_int_active>;
+	    pinctrl-1 = <&hall_int_suspend>;
+	    //interrupt-parent = <&msm_gpio>;
+	    //interrupts = <0 107 3>;
+	    vdd-io-supply= <&pm660_l8>;
+	    interrupt-names = "hall_irq";
+	    hall,irq-gpio = <&tlmm 76 0x0>;
 	};
 
 	dbmdx {
@@ -141,21 +143,21 @@
 		feature-va; /* enable VA */
 		va-firmware-name = "dbmd4_va_fw.bin";
 		va-config = <0x80000000
-				 0x80000000
-				 0x80290020
-				 0x80330019
-				 0x802210e4
-				 0x80158E8E
-				 0x801b0020
-				 0x80230001
-				 0x801A0017
-				 0x80103015
-				 0x80000000
-				 0x80000000
-				 0x80000000>;
+			     0x80000000
+			     0x80290020
+			     0x80330019
+			     0x802210e4
+			     0x80158E8E
+			     0x801b0020
+			     0x80230001
+			     0x801A0017
+			     0x80103015
+			     0x80000000
+			     0x80000000
+			     0x80000000>;
 		va-speeds = <0x0000 460800  0 960000
-				 0x0000 2000000 0 4800000
-				 0x0000 3000000 0 4800000>;
+			     0x0000 2000000 0 4800000
+			     0x0000 3000000 0 4800000>;
 		va-mic-config = <0xf041 0x1044 0x0008>;
 		va-mic-mode = <4>;
 /*
