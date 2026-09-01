@@ -68,6 +68,8 @@
 
 #define PROC_NAME  "hwinfo"
 
+extern int fpsensor;
+
 #define N_SPI_MINORS		32	/* ... up to 256 */
 static int SPIDEV_MAJOR;
 
@@ -939,6 +941,11 @@ static struct platform_driver gf_driver = {
 static int __init gf_init(void)
 {
 	int status;
+
+	if (fpsensor != 2) {
+		pr_err("gf_init failed as fpsensor=%d(2=gx)\n", fpsensor);
+		return -EPERM;
+	}
 
 	/* Claim our 256 reserved device numbers.  Then register a class
 	 * that will key udev/mdev to add/remove /dev nodes.  Last, register
